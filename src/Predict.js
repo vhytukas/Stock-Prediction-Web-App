@@ -98,10 +98,12 @@ const Predict = ({state}) => {
         callbacks: { onEpochBegin, onEpochEnd, onBatchEnd },
       })
       .then((info) => {
-        setEpochCount(0);
-        model.save("localstorage://my-model-1");
+        model.save("localstorage://my-model-1").then(() =>{
+          setEpochCount(0);
         modelPredHandler(predData, dataMax, dataMin);
         setTraining(false)
+        })
+        
       });
   };
   function onEpochBegin() {

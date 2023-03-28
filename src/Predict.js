@@ -53,11 +53,11 @@ const Predict = ({state}) => {
     const y_train = [];
 
     getPriceData(ticker).then((value) => {
-      
+      console.log(value)
       if (value === "404" || value === "400") {
         //value === "404" || value === "400"
         setShowError(true);
-      } else if (value.length < 560) {
+      } else if (value.length < 500) {
         // value.length < 560
         setShowError(true);
       } else {
@@ -76,8 +76,8 @@ const Predict = ({state}) => {
         }
         const predictionData = temp.slice(-60);
 
-        const x_train_tensor = tf.tensor(x_train, [500, 60, 1]);
-        const y_train_tensor = tf.tensor(y_train, [500]);
+        const x_train_tensor = tf.tensor(x_train, [value.length - 60, 60, 1]);
+        const y_train_tensor = tf.tensor(y_train, [value.length - 60]);
         const predictionData_tensor = tf.tensor(predictionData, [1, 60, 1]);
         modelFitHandler(
           x_train_tensor,
